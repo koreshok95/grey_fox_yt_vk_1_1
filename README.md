@@ -8,7 +8,7 @@ settings.ini - settings for yt_grey_fox_main.py
   time in seconds between check and download new videos 
   number of attempts to download video
   number of attempts to generate  subtitles and hard burn in them video
-vk_settings.ini
+vk_settings.ini describe
 vk_settings.ini - settings for vk_upload_app.py
   path to database
   path to directory to store downloaded stolen youtube videos
