@@ -71,6 +71,7 @@ def main():
     except Exception as e:
         with open('logs.txt','a') as f:
             f.write(f'{datetime.now()} : {e}\n')
+    
 
 if __name__=='__main__':
     s=vk_settings()

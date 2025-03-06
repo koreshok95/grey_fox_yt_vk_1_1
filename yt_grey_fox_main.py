@@ -13,6 +13,7 @@ class settings:
             self.rep_time=int(f.readline())
             self.down_trys=int(f.readline())
             self.burn_trys=int(f.readline())
+            self.sec_before_del=int(f.readline())
             #print(self.dbase_path)
             self.db=grey_fox_db.data_transfer_from_db(self.dbase_path)
             #self.db=grey_fox_db.data_transfer_from_db('grey_fox_1.db')
@@ -49,7 +50,8 @@ def main():
                 with open('logs.txt','a') as f:
                     f.write(f'{datetime.now()} : {e}\n')
                 continue
-    
+    #удаляем старые видео с момента паблика которых прошло больше чем vk_settings.sec_before_del секунд
+    s.db.delete_old_video(s.sec_before_del,s.video_dir)
 
 if __name__=='__main__':
     s=settings()

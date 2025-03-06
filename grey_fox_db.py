@@ -1,6 +1,7 @@
 
 import sqlite3
 import time
+import os
 
 #connect_str='grey_fox_1.db'
 
@@ -16,7 +17,7 @@ def create_new_base(db_name):
             vk_main_group_api_key TEXT NOT NULL, vk_main_group_id TEXT NOT NULL, vk_playlist_key TEXT NOT NULL,last_post_time INTEGER NOT NULL,main_last_post_time INTEGER NOT NULL)'''
             c2='''CREATE TABLE IF NOT EXISTS News (id TEXT PRIMARY KEY, chanel_id TEXT NOT NULL, vk_group_api_key TEXT NOT NULL,vk_group_id TEXT NOT NULL,
             vk_main_group_api_key TEXT NOT NULL, vk_main_group_id TEXT NOT NULL, vk_playlist_key TEXT NOT NULL, video_url TEXT NOT NULL,
-            description TEXT NOT NULL, title TEXT NOT NULL, file_name TEXT NOT NULL, is_up INTEGER NOT NULL,is_up_main INTEGER NOT NULL,is_shorts INTEGER NOT NULL)'''
+            description TEXT NOT NULL, title TEXT NOT NULL, file_name TEXT NOT NULL, is_up INTEGER NOT NULL,is_up_main INTEGER NOT NULL,is_shorts INTEGER NOT NULL, last_use INTEGER NOT NULL)'''
             cursor.execute(c1)
             cursor.execute(c2)
             connection.commit()
@@ -48,15 +49,15 @@ class data_transfer_from_db:
     def append_new_news_record(self,news_records):
         '''
         news_recordы список словарей с новостями
-        ключи словаря news_record должны совпадать с полями таблицы,видео уже быть загружено
+        ключи словаря news_record должны совпадать с полями таблицы(кроме last_use-он создасться автоматом),видео уже быть загружено
         id, chanel_id, vk_group_api_key, vk_group_id, vk_main_group_api_key, vk_main_group_id, vk_playlist_key, video_url, description, title, file_name, is_up,is_up_main, is_shorts
         '''
         m=0
         for news_record in news_records:
-            cm=f'''INSERT INTO News (id, chanel_id, vk_group_api_key, vk_group_id, vk_main_group_api_key, vk_main_group_id, vk_playlist_key, video_url, description, title, file_name, is_up,is_up_main, is_shorts) 
+            cm=f'''INSERT INTO News (id, chanel_id, vk_group_api_key, vk_group_id, vk_main_group_api_key, vk_main_group_id, vk_playlist_key, video_url, description, title, file_name, is_up,is_up_main, is_shorts,last_use) 
             VALUES ("{news_record['id']}","{news_record['chanel_id']}","{news_record['vk_group_api_key']}","{news_record['vk_group_id']}",
             "{news_record['vk_main_group_api_key']}","{news_record['vk_main_group_id']}","{news_record['vk_playlist_key']}",
-            "{news_record['video_url']}","{news_record['description']}","{news_record['title']}","{news_record['file_name']}",{news_record['is_up']},{news_record['is_up_main']},{news_record['is_shorts']})'''
+            "{news_record['video_url']}","{news_record['description']}","{news_record['title']}","{news_record['file_name']}",{news_record['is_up']},{news_record['is_up_main']},{news_record['is_shorts']},{int(time.time())})'''
             try:
                 cr=self.connection.cursor()
                 x=cr.execute(cm)
@@ -107,7 +108,7 @@ class data_transfer_from_db:
         Отмечает новость c id как загруженную в личную группу 
         возвращает 1 если успешно
         '''
-        cm=f'UPDATE News SET is_up=1 WHERE id="{id}"'
+        cm=f'UPDATE News SET is_up=1,last_use={int(time.time())} WHERE id="{id}"'
         try:
             cr=self.connection.cursor()
             x=cr.execute(cm)
@@ -120,7 +121,7 @@ class data_transfer_from_db:
         Отмечает новость c id как загруженную в главную группу 
         возвращает 1 если успешно
         '''
-        cm=f'UPDATE News SET is_up_main=1 WHERE id="{id}"'
+        cm=f'UPDATE News SET is_up_main=1,last_use={int(time.time())} WHERE id="{id}"'
         try:
             cr=self.connection.cursor()
             x=cr.execute(cm)
@@ -196,3 +197,31 @@ class data_transfer_from_db:
         cr.execute(cm)
         b=cr.fetchone()
         return a[0],b[0],b[1]
+    def delete_old_video(self,t,dir):
+        '''
+        удаляет файлы- с момента взаимодействия с которыми прошло больше t секунд- из директории dir
+        заменяет имя файла в базе на @del
+        '''
+        t_now=int(time.time())
+        cm=f'SELECT id,file_name FROM News WHERE is_up=1 and is_up_main=1 and file_name<>"@del" and abs(last_use-{t_now})>{t}'
+        cr=self.connection.cursor()
+        cr.execute(cm)
+        news=cr.fetchall()
+        ids,files=['\"'+x[0]+'\"' for x in news],[x[1] for x in news]
+        cm=f'UPDATE News SET file_name ="@del" WHERE id in ({",".join(ids)})'
+        try:
+            cr=self.connection.cursor()
+            x=cr.execute(cm)
+        except Exception as e:
+            return e
+        self.connection.commit()
+        print(files)
+        for f in files:
+            try:
+                os.remove(dir+'/'+f)
+            except:
+                continue
+        return 1
+
+#mdb=data_transfer_from_db('grey_fox_1.db')
+#print(mdb.delete_old_video(10,'C:/Users/koreshok_main/Videos/youtube_scrap'))
