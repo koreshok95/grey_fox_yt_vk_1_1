@@ -52,3 +52,9 @@ News - videos stolen from youtube and they status
   is_up - flag (1)-video is uploaded to conected group 
   is_up_main - flag (1)-video is uploaded to main(group unifying all videos and content from all groups ) group 
   is_shorts - flag (1)-video duration is less then 3 min, and could bee vk_clip
+Other Modules 
+auto_sub_yt_dlp.py - functions for downloading videos? and hard burning subtitles
+manual_load.py - manual video downloads and subtitles burning from youtube
+rss_yt_parse.py - get essential info from xmls over youtube rss requests
+vk_upload.py - class vk_manage_app to manage uploading video and posts
+grey_fox+db.py - class data_transfer_from_db to make sql querys, create_new_base - create empty DB 
