@@ -54,6 +54,7 @@ News - videos stolen from youtube and they status
   is_up - flag (1)-video is uploaded to conected group 
   is_up_main - flag (1)-video is uploaded to main(group unifying all videos and content from all groups ) group 
   is_shorts - flag (1)-video duration is less then 3 min, and could bee vk_clip
+  last_use - sec from 1970 when info in news recor was updatetd(upload, creation)
 Other Modules 
 auto_sub_yt_dlp.py - functions for downloading videos? and hard burning rus subtitles
 manual_load.py - manual video downloads and subtitles burning from youtube
