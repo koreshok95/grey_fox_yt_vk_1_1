@@ -61,3 +61,4 @@ manual_load.py - manual video downloads and subtitles burning from youtube
 rss_yt_parse.py - get essential info from xmls over youtube rss requests
 vk_upload.py - class vk_manage_app to manage uploading video and posts
 grey_fox+db.py - class data_transfer_from_db to make sql querys, create_new_base - create empty DB 
+templates/.[] - posts text  (in utf-8 ) - posts when enough(vk_settings) time left from goup or main_group last post
