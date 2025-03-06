@@ -20,7 +20,7 @@ vk_settings.ini - settings for vk_upload_app.py
   max time in seconds allowed between post in group, after exceeding it-generating template post
   directory to store templates for posts
 Describe of apps
-yt_grey_fox_main.py - get updates from rss xml over youtube chanels in database. Download and add video files(with rus subs)(using file storage) to database(grey_fox_1.db)
+yt_grey_fox_main.py - get updates from rss xml over youtube chanels in database. Download and add video files(with rus subs)(using file storage) to database(grey_fox_1.db). deletes old video files(if them already has been uploaded)-old means that enough seconds(from settings) left from last_use of news
 vk_upload_app.py - upload videos from database(grey_fox_1.db) and make posts in groups. if there are no any new videos from the chanel for over a certain time -<so no new posts in Vk group>-  ()-make random post from template
 INSTAL
 get python 3.10 - is optimal
