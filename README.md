@@ -9,6 +9,7 @@ settings.ini - settings for yt_grey_fox_main.py
   time in seconds between check and download new videos 
   number of attempts to download video
   number of attempts to generate rus  subtitles and hard burn  them in video
+  seconds before video file ( if it was uploaded)- would be deleted, and video file info in dbase would be marked as deleted(file_name="@del")
 vk_settings.ini describe
 vk_settings.ini - settings for vk_upload_app.py
   path to database
