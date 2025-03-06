@@ -1,6 +1,7 @@
 # grey_fox_yt_vk_1_1
 Manager for Vk groups based on stollen youtube videos
 require almost everything from requirments.txt + ffmpeg.exe and ffprobe.exe in the main project directory
+for wisper need to install git
 Setteings .ini files describe
 settings.ini - settings for yt_grey_fox_main.py
   path to database
