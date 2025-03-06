@@ -7,7 +7,7 @@ settings.ini - settings for yt_grey_fox_main.py
   path to directory to store downloaded stolen youtube videos
   time in seconds between check and download new videos 
   number of attempts to download video
-  number of attempts to generate  subtitles and hard burn in them video
+  number of attempts to generate rus  subtitles and hard burn  them in video
 vk_settings.ini describe
 vk_settings.ini - settings for vk_upload_app.py
   path to database
@@ -18,7 +18,7 @@ vk_settings.ini - settings for vk_upload_app.py
   max time in seconds allowed between post in group, after exceeding it-generating template post
   directory to store templates for posts
 Describe of apps
-yt_grey_fox_main.py - get updates from rss xml over youtube chanels in database. Download and add video files(using file storage) to database(grey_fox_1.db)
+yt_grey_fox_main.py - get updates from rss xml over youtube chanels in database. Download and add video files(with rus subs)(using file storage) to database(grey_fox_1.db)
 vk_upload_app.py - upload videos from database(grey_fox_1.db) and make posts in groups. if there are no any new videos from the chanel for over a certain time -<so no new posts in Vk group>-  ()-make random post from template
 INSTAL
 get python 3.10 - is optimal
@@ -53,7 +53,7 @@ News - videos stolen from youtube and they status
   is_up_main - flag (1)-video is uploaded to main(group unifying all videos and content from all groups ) group 
   is_shorts - flag (1)-video duration is less then 3 min, and could bee vk_clip
 Other Modules 
-auto_sub_yt_dlp.py - functions for downloading videos? and hard burning subtitles
+auto_sub_yt_dlp.py - functions for downloading videos? and hard burning rus subtitles
 manual_load.py - manual video downloads and subtitles burning from youtube
 rss_yt_parse.py - get essential info from xmls over youtube rss requests
 vk_upload.py - class vk_manage_app to manage uploading video and posts
