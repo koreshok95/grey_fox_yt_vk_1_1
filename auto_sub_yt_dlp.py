@@ -14,8 +14,9 @@ def yt_load(link,dir,ntrys=5,rname_output=True):
 	загружает видео с ютуба по ссылке
 	link-ссылка,dir-папка для сохранения,ntry-число попыток загрузки=5,rname_output перименовывать файл видео после загрузки
 	return -1-ошибка загрузки, полный путь до файла
+	сначала пытается скачать видео в 1080р, при неудаче в 720р
 	"""
-	yt_opts = {'outtmpl': f'{dir}%(title)s.%(ext)s' }
+	yt_opts = {'outtmpl': f'{dir}%(title)s.%(ext)s','format':'bestvideo[height=1080]+bestaudio/best' }
 	if dir[-1]!='/':
 		dir+='/'
 	while ntrys>0:
@@ -32,6 +33,7 @@ def yt_load(link,dir,ntrys=5,rname_output=True):
 					return fname
 		except:
 			ntrys-=1
+			yt_opts['format']='bestvideo[height=720]+bestaudio/best'
 	return -1
 
 
